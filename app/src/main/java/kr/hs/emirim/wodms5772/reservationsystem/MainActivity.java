@@ -1,5 +1,7 @@
 package kr.hs.emirim.wodms5772.reservationsystem;
 
+import android.graphics.Color;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +54,34 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calView.setVisibility(View.INVISIBLE);
                 timePick.setVisibility(View.VISIBLE);
+            }
+        });
+
+        butStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chrono.setBase(SystemClock.elapsedRealtime());
+                chrono.start();
+                chrono.setTextColor(Color.RED);
+            }
+        });
+
+        butDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chrono.stop();
+                chrono.setTextColor(Color.BLUE);
+                Calendar cal=Calendar.getInstance();
+                cal.setTimeInMillis(calView.getDate());
+
+                int year=cal.get(Calendar.YEAR);
+                int month=cal.get(Calendar.MONTH)+1;//MONTH는 0부터나옴
+                int date=cal.get(Calendar.DATE);
+//                int hour=timePick.getHour();
+//                int minute=timePick.getMinute();
+                String dateAndTime=year+"년 "+month+"월 "+date+"일 ";
+                textResult.setText(dateAndTime);
+
             }
         });
 
